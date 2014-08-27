@@ -17,12 +17,19 @@ public class KwicMain {
 	public static void main(String[] args) {
 		List<String> ignoreList = readFile(IGNORE_LIST);
 		List<String> inputList = readFile(INPUT_LIST);
+		KwicStore<String> kwicStore = new KwicStore<String>();
+		StorePipe storePipe = new StorePipe(kwicStore);
 		
 		for (int i = 0; i < inputList.size(); i++) {
-			// create first filter
-			// create pipe, passing filter as constructor arg
-			// push data into pipe
-		}
+			// create circular shift filter     				IFilter csFilter = new CSFilter(storePipe);
+			// create pipe, passing filter as constructor arg	IPipe fPipe = new FilterPipe();
+			// push data into pipe								fPipe.push(data);
+			
+			// pipe will invoke circular shift method in filter (inside filter)
+			// push new data into storePipe (inside filter)
+			// add new data to KwicStore (inside filter)
+		}		
+		// output KwicStore
 	}
 	
 	private static List<String> readFile(String fileName) {

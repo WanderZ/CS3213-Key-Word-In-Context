@@ -1,9 +1,9 @@
 package src;
 
-public abstract class AbstractPipe {
+public abstract class AbstractFilterPipe {
 	protected IFilter destinationFilter;
 	
-	public AbstractPipe(IFilter filter) {
+	public AbstractFilterPipe(IFilter filter) {
 		destinationFilter = filter;
 	}
 }

@@ -1,7 +1,7 @@
 package src;
 
-public class Pipe extends AbstractPipe implements IPipe {
-	public Pipe(IFilter destinationFilter) {
+public class FilterPipe extends AbstractFilterPipe implements IPipe {
+	public FilterPipe(IFilter destinationFilter) {
 		super(destinationFilter);
 	}
 	
