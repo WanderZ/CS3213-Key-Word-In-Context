@@ -1,15 +1,22 @@
 package src;
 
-public class StorePipe implements IPipe {
+import java.util.LinkedList;
+import java.util.Queue;
+
+public class StorePipe extends AbstractPipe implements IPipe {
 	private KwicStore<String> store;
 	
 	public StorePipe(KwicStore<String> ks) {
+		super();
 		store = ks;
 	}
 	
 	@Override
 	public void push(Object payload) {
-		store.add((String)payload);
+		buffer.add(payload);
+		while (buffer.peek() != null) {
+			store.add((String)buffer.poll());
+		}
 	}
 
 }
