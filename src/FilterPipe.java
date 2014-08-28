@@ -1,7 +1,6 @@
 package src;
 
-import java.util.LinkedList;
-import java.util.Queue;
+import util.Message;
 
 public class FilterPipe extends AbstractPipe implements IPipe {
 	private IFilter destinationFilter;
@@ -12,7 +11,7 @@ public class FilterPipe extends AbstractPipe implements IPipe {
 	}
 	
 	@Override
-	public void push(Object payload) {
+	public void push(Message payload) {
 		buffer.add(payload);
 		while (buffer.peek() != null) {
 			destinationFilter.receiveData(buffer.poll());

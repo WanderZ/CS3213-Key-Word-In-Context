@@ -1,5 +1,7 @@
 package src;
 
+import util.Message;
+
 public interface IPipe {
-	public void push(Object payload);
+	public void push(Message payload);
 }

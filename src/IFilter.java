@@ -1,6 +1,8 @@
 package src;
 
+import util.Message;
+
 public interface IFilter {
-	public void sendData(Object payload);	// pipe.push(data)
-	public void receiveData(Object payload);
+	public void sendData(Message payload);	// pipe.push(data)
+	public void receiveData(Message payload);
 }

@@ -5,7 +5,10 @@ import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
+
+import util.Message;
 
 public class KwicMain {
 	private static final String IGNORE_LIST = "ignore.txt";
@@ -21,15 +24,15 @@ public class KwicMain {
 		StorePipe storePipe = new StorePipe(kwicStore);
 		
 		for (int i = 0; i < inputList.size(); i++) {
-			// create circular shift filter     				IFilter csFilter = new CSFilter(storePipe);
-			// create pipe, passing filter as constructor arg	IPipe fPipe = new FilterPipe();
-			// push data into pipe								fPipe.push(data);
-			
-			// pipe will invoke circular shift method in filter (inside filter)
-			// push new data into storePipe (inside filter)
-			// add new data to KwicStore (inside filter)
+			IFilter csFilter = new CircularShiftFilter(storePipe);
+			IPipe fPipe = new FilterPipe(csFilter);
+			fPipe.push(new Message(inputList.get(i)));
 		}		
-		// output KwicStore
+		
+		 Iterator<String> itr = kwicStore.iterator();
+		 while (itr.hasNext()) {
+			 System.out.println("Output: " + itr.next());
+		 }
 	}
 	
 	private static List<String> readFile(String fileName) {

@@ -3,14 +3,16 @@ package src;
 import java.util.LinkedList;
 import java.util.Queue;
 
+import util.Message;
+
 public abstract class AbstractPipe {
-	protected Queue<Object> buffer;
+	protected Queue<Message> buffer;
 	
 	public AbstractPipe() {
-		buffer = new LinkedList<Object>();
+		buffer = new LinkedList<Message>();
 	}
 	
-	public void push(Object payload) {
+	public void push(Message payload) {
 		buffer.add(payload);
 	}
 }

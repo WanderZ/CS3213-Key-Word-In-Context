@@ -1,7 +1,6 @@
 package src;
 
-import java.util.LinkedList;
-import java.util.Queue;
+import util.Message;
 
 public class StorePipe extends AbstractPipe implements IPipe {
 	private KwicStore<String> store;
@@ -12,10 +11,10 @@ public class StorePipe extends AbstractPipe implements IPipe {
 	}
 	
 	@Override
-	public void push(Object payload) {
+	public void push(Message payload) {
 		buffer.add(payload);
 		while (buffer.peek() != null) {
-			store.add((String)buffer.poll());
+			store.add(buffer.poll().getMessage());
 		}
 	}
 
