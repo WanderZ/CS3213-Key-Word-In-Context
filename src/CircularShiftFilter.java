@@ -31,7 +31,7 @@ public class CircularShiftFilter implements IFilter {
 					System.out.print(stringInParts[j]);
 					j++;
 					if(j == stringInParts.length) j = 0;
-				} while(j!=i);
+				} while(j != i);
 				System.out.println();
 			}
 			
