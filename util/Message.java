@@ -7,4 +7,8 @@ public class Message {
 	public Message(String str) { data = str; }
 	
 	public String getMessage() { return data; }
+	
+	public String toString() {
+		return this.data;
+	}
 }
