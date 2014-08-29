@@ -6,6 +6,10 @@ import java.util.Queue;
 import util.Message;
 
 public abstract class AbstractPipe {
+	
+	/**
+	 * First in first out memory buffer
+	 */
 	protected Queue<Message> buffer;
 	
 	public AbstractPipe() {

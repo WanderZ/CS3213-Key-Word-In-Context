@@ -11,12 +11,17 @@ import java.util.List;
 import util.Message;
 
 public class KwicMain {
-	private static final String IGNORE_LIST = "ignore.txt";
-	private static final String INPUT_LIST = "input.txt";
 	
 	/**
-	 * @param args
+	 * Default file location for the ignore keyword list
 	 */
+	private static final String IGNORE_LIST = "ignore.txt";
+	
+	/**
+	 * Default file location for the input string text
+	 */
+	private static final String INPUT_LIST = "input.txt";
+	
 	public static void main(String[] args) {
 		List<String> ignoreList = readFile(IGNORE_LIST);
 		List<String> inputList = readFile(INPUT_LIST);
@@ -24,7 +29,9 @@ public class KwicMain {
 		StorePipe storePipe = new StorePipe(kwicStore);
 		
 		for (int i = 0; i < inputList.size(); i++) {
-			IFilter csFilter = new CircularShiftFilter(storePipe);
+			IFilter ignoreFilter = new IgnoreFilter(storePipe, ignoreList);
+			IPipe ignorePipe = new FilterPipe(ignoreFilter);
+			IFilter csFilter = new CircularShiftFilter(ignorePipe);
 			IPipe fPipe = new FilterPipe(csFilter);
 			fPipe.push(new Message(inputList.get(i)));
 		}		
