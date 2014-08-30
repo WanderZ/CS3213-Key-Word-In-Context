@@ -42,16 +42,11 @@ public class IgnoreFilter implements IFilter {
 	private void removeIgnoreEntry(Message msg) {
 		@SuppressWarnings("unchecked")
 		List<String[]> circularShifts = (List<String[]>)msg.getData();
-		List<String> result = new LinkedList<String>();
+		List<String[]> result = new LinkedList<String[]>();
 		
 		for(String[] particularCircularShift : circularShifts) {
 			if(!keywords.contains(particularCircularShift[IGNORE_POS])) {
-				StringBuilder sb = new StringBuilder();
-				
-				for (int i = 0; i < particularCircularShift.length; i++) 
-					sb.append(particularCircularShift[i]);
-				
-				result.add(sb.toString());
+				result.add(particularCircularShift);
 			}
 		}
 		sendData(new Message(result));

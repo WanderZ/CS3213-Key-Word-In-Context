@@ -53,8 +53,13 @@ public class KwicMain {
 			// Create modules and connect them
 			KwicStore<String> 	kwicStore 		= new KwicStore<String>();
 			StorePipe 			storePipe 		= new StorePipe(kwicStore);
-			IFilter 			ignoreFilter 	= new IgnoreFilter(storePipe, ignoreSet, IGNORE_POS);
+
+			IFilter 			formatFilter 	= new FormatFilter(storePipe);
+			IPipe 				formatPipe 		= new FilterPipe(formatFilter);
+			
+			IFilter 			ignoreFilter 	= new IgnoreFilter(formatPipe, ignoreSet, IGNORE_POS);
 			IPipe 				ignorePipe 		= new FilterPipe(ignoreFilter);
+			
 			IFilter 			csFilter 		= new CircularShiftFilter(ignorePipe, DELIMITER, DELIMITER_REGEX);
 			IPipe 				csPipe 			= new FilterPipe(csFilter);
 			
@@ -71,7 +76,7 @@ public class KwicMain {
 			}
 			System.out.print(sb.toString());
 		}
-		else System.out.println("Usage: Kwic.jar input-file ignore-words-file");
+		else System.out.println("Usage: input-file ignore-words-file");
 	}
 	
 	private static List<String> readFile(String fileName) {
