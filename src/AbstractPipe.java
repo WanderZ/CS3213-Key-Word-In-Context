@@ -5,7 +5,7 @@ import java.util.Queue;
 
 import util.Message;
 
-public abstract class AbstractPipe {
+public abstract class AbstractPipe implements IPipe {
 	
 	/**
 	 * First in first out memory buffer

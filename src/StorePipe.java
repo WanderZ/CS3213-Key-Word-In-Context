@@ -1,5 +1,7 @@
 package src;
 
+import java.util.List;
+
 import util.Message;
 
 public class StorePipe extends AbstractPipe implements IPipe {
@@ -14,7 +16,9 @@ public class StorePipe extends AbstractPipe implements IPipe {
 	public void push(Message payload) {
 		buffer.add(payload);
 		while (buffer.peek() != null) {
-			store.add(buffer.poll().getMessage());
+			@SuppressWarnings("unchecked")
+			List<String> data = (List<String>)buffer.poll().getData();
+			for (String str : data) store.add(str);
 		}
 	}
 

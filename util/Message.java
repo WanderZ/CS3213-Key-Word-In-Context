@@ -1,31 +1,14 @@
 package util;
 
-import java.util.List;
-import java.util.ArrayList;
-
 public class Message {
 	
-	private String data;
-	private List<String> generated;
+	private Object data;
 	
-	public Message(String str) { 
-		data = str; 
-		generated = new ArrayList<String>();
+	public Message(Object data) { 
+		this.data = data;
 	}
 	
-	public String getMessage() {
+	public Object getData() {
 		return data; 
-	}
-	
-	public void addGeneratedText(String generatedStr) {
-		generated.add(generatedStr);
-	}
-	
-	public List<String> getGenerated() {
-		return this.generated;
-	}
-	
-	public String toString() {
-		return this.data;
 	}
 }

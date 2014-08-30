@@ -1,6 +1,8 @@
 package src;
 
+import java.util.LinkedList;
 import java.util.List;
+import java.util.Set;
 
 import util.Message;
 
@@ -9,46 +11,50 @@ public class IgnoreFilter implements IFilter {
 	/**
 	 * List of keywords to ignore and filter out
 	 */
-	private List<String> keywords;
-	
+	private Set<String> keywords;
+
 	/**
-	 * Payload to be moving around
+	 * Positions of tokens to ignore in circular permutations.
 	 */
-	private Message msg;
+	private int IGNORE_POS; 
 	
 	/**
 	 * The outward going pipe to transfer out the filtered data.
 	 */
 	private IPipe outputPipeEnd;
 	
-	public IgnoreFilter() {}
-	
-	public IgnoreFilter(IPipe pipe, List<String> keywords) {
-		outputPipeEnd = pipe;
+	public IgnoreFilter(IPipe pipe, Set<String> keywords, int pos) {
+		this.outputPipeEnd = pipe;
 		this.keywords = keywords;
+		this.IGNORE_POS = pos;
 	}	
 	
 	@Override
 	public void sendData(Message payload) {
-		outputPipeEnd.push(msg);
+		outputPipeEnd.push(payload);
 	}
 
 	@Override
 	public void receiveData(Message payload) {
-		msg = payload;
-		removeIgnoreEntry();
+		removeIgnoreEntry(payload);
 	}
 	
-	public void removeIgnoreEntry() {
-		List<String> msgGenerated = msg.getGenerated();
-		Message finalMsg = new Message(msg.getMessage());
+	private void removeIgnoreEntry(Message msg) {
+		@SuppressWarnings("unchecked")
+		List<String[]> circularShifts = (List<String[]>)msg.getData();
+		List<String> result = new LinkedList<String>();
 		
-		for(String genStr : msgGenerated) {
-			if(!keywords.contains(genStr.split(" ")[0].toLowerCase())) {
-				finalMsg.addGeneratedText(genStr);
+		for(String[] particularCircularShift : circularShifts) {
+			if(!keywords.contains(particularCircularShift[IGNORE_POS])) {
+				StringBuilder sb = new StringBuilder();
+				
+				for (int i = 0; i < particularCircularShift.length; i++) 
+					sb.append(particularCircularShift[i]);
+				
+				result.add(sb.toString());
 			}
 		}
-		sendData(finalMsg);
+		sendData(new Message(result));
 	}
 
 }

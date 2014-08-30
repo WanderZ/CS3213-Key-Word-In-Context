@@ -3,22 +3,22 @@ package src;
 import java.util.Iterator;
 import java.util.TreeSet;
 
-public class KwicStore<E> {
-	private TreeSet<E> store;
+public class KwicStore<T> {
+	private TreeSet<T> store;
 	
 	public KwicStore() {
-		store = new TreeSet<E>();
+		store = new TreeSet<T>();
 	}
 	
-	public void add(E str) {
+	public void add(T str) {
 		store.add(str);
 	}
 	
-	public Iterator<E> descendingIterator() {
+	public Iterator<T> descendingIterator() {
 		return store.descendingIterator();
 	}
 	
-	public Iterator<E> iterator() {
+	public Iterator<T> iterator() {
 		return store.iterator();
 	}
 }
